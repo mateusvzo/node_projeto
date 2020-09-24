@@ -7,14 +7,14 @@ sessionsRouter.post('/', async (request, response) => {
     try {
         const { email, password } = request.body;
         const sessionsUsuariosController = new SessionsUsuariosController();
-        const { user } = await sessionsUsuariosController.store({
+        const { user, token } = await sessionsUsuariosController.store({
             email,
             password,
         });
 
         delete user.password;
 
-        return response.json(user);
+        return response.json({ user, token });
     } catch (erro) {
         return response.status(400).json({ error: erro.message });
     }
